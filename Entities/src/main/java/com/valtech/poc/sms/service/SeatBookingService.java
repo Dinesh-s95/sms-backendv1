@@ -50,9 +50,9 @@ public interface SeatBookingService {
 	// boolean canEmployeeBookSeat(int eId, int sId,LocalDate sbDate) throws
 	// ServiceException;
 
-	String createSeatsBookedDaily(int eId, int sId, int stId, String from, String to);
+	String createSeatsBookedDaily(int eId, int sId, int stId, String from, String to,Boolean food);
 
-	String createSeatsBookedWeekly(int eId, int sId, int stId, String from, String to);
+	String createSeatsBookedWeekly(int eId, int sId, int stId, String from, String to,Boolean food);
 
 	List<SeatsBooked> getSeatsBookedByEmployeeAndDate(int empId, LocalDateTime startDate, LocalDateTime endDate);
 

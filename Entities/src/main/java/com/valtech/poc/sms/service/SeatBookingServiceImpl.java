@@ -213,7 +213,7 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 
 	/*Saving the booked seats details daily*/
 	@Override
-	public String createSeatsBookedDaily(int eId, int sId, int stId, String from, String to) {
+	public String createSeatsBookedDaily(int eId, int sId, int stId, String from, String to,Boolean food) {
 		Employee emp = employeeRepo.findById(eId).get();
 		Seat seat = seatRepo.findById(sId).get();
 		ShiftTimings st = shiftTimingsRepo.findById(stId).get();
@@ -245,7 +245,7 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 //				return "The Same Seat is booked successfully because you are selecting this seat more than 3 times with ID: "
 //						+ savedSeatsBooked.getSbId();
 //			} else {
-				SeatsBooked sb = new SeatsBooked(localDateTime, null, null, true, code, seat, emp, false, false, true,
+				SeatsBooked sb = new SeatsBooked(localDateTime, null, null, true, code, seat, emp, false, false, food,
 						st);
 				SeatsBooked savedSeatsBooked = saveSeatsBookedDetails(sb);
 				if(sb.isFood()==true) {
@@ -268,7 +268,7 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 	
 	/*Saving the booked seats details for custom dates*/
 	@Override
-	public String createSeatsBookedWeekly(int eId, int sId, int stId, String from, String to) {
+	public String createSeatsBookedWeekly(int eId, int sId, int stId, String from, String to,Boolean food) {
 	    Employee emp = employeeRepo.findById(eId).get();
 	    Seat seat = seatRepo.findById(sId).get();
 	    ShiftTimings st = shiftTimingsRepo.findById(stId).get();
@@ -296,7 +296,7 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 	                LocalDateTime localDateTime = date.atStartOfDay();
 	                String code = adminService.generateQrCode(eId);
 	                SeatsBooked sb = new SeatsBooked(localDateTime, null, null, true, code, seat, emp, false, false,
-	                        false, st);
+	                        food, st);
 	                seatsBookedRepo.save(sb);
 	                if (sb.isFood()) {
 	                    seatBookingDao.updatFoodCount(sb.getSbDate());

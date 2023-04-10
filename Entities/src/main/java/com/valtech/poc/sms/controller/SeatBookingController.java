@@ -103,7 +103,7 @@ public class SeatBookingController {
 	@PostMapping("/create/{eId}")
 	public synchronized ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId,
 			@RequestParam("sname") String sname, @RequestParam("sttime") String sttime,
-			@RequestParam("from") String from, @RequestParam("to") String to) {
+			@RequestParam("from") String from, @RequestParam("to") String to,@RequestParam("food")Boolean food) {
 		String stDate = from + " 00:00:00";
 		String edDate = to + " 00:00:00";
 		int sId = seatService.getSidBySname(sname);
@@ -116,11 +116,11 @@ public class SeatBookingController {
 		// between stid, start time, and end time
 		int stId = shiftTimingsService.getStId(startTime, endTime);
 		if (from.equals(to)) {
-			return ResponseEntity.ok(seatService.createSeatsBookedDaily(eId, sId, stId, stDate, edDate));
+			return ResponseEntity.ok(seatService.createSeatsBookedDaily(eId, sId, stId, stDate, edDate,food));
 		}
 
 		else {
-			return ResponseEntity.ok(seatService.createSeatsBookedWeekly(eId, sId, stId, stDate, edDate));
+			return ResponseEntity.ok(seatService.createSeatsBookedWeekly(eId, sId, stId, stDate, edDate,food));
 		}
 
 	}
